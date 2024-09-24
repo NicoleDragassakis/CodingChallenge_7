@@ -66,7 +66,7 @@ function calculateDepartmentSalary(department) { //this function will calculate 
     for (let employee of department.employees) {
         totalSalary += employee.salary; //
 
-        if (employee.subordinates > 0) {
+        if (employee.subordinates && employee.subordinates.length > 0) { //without the && employee.subordinates.length the outpouts are wrong by -180,000?????
             totalSalary += calculateDepartmentSalary({ employees: employee.subordinates });
         }
     }
@@ -75,7 +75,23 @@ function calculateDepartmentSalary(department) { //this function will calculate 
 }
 
 const totalEngDepartmentSalary = calculateDepartmentSalary(company.departments[0]);
-console.log(`Total Salary for Engineering department: $${totalEngDepartmentSalary}`);
+console.log(`Total Salary for Engineering department: $${totalEngDepartmentSalary}`); //outputs 330,000
 
 const totalSaleDepartmentSalary = calculateDepartmentSalary(company.departments[1]);
-console.log(`Total Salary for Sales department: $${totalSaleDepartmentSalary}`);
+console.log(`Total Salary for Sales department: $${totalSaleDepartmentSalary}`); //outputs 250,000
+
+//TASK THREE
+
+console.log("TASK THREE");
+
+//this function will calculate total salary for the entire copnay and sum up all slaries of all departments
+
+function calculateCompanySalary(company){
+    let totalSalary=0;
+
+    for(let department of company.departments){
+        totalSalary += calculateDepartmentSalary(department); 
+    }
+    return totalSalary;
+}
+console.log("Total Company Salary:", calculateCompanySalary(company)); // outputs 580,000
